@@ -1,11 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <locale.h>
+#include <stdio.h>  // Biblioteca de entrada e saída padrão.
+#include <stdlib.h> // Biblioteca para alocação de memória.
+#include <string.h> // Biblioteca para manipulação de strings.
+#include <locale.h> // Biblioteca que permite a acentuação no código.
 
-// Define os usuários e senha
-const char USERNAME[] = "Usuario";
-const char PASSWORD[] = "Senha";
+// Definindo a estrutura do usuário
+typedef struct {
+    char username[50];
+    char password[50];
+} Usuario;
 
 // Definindo a estrutura do livro
 typedef struct {
@@ -14,8 +16,8 @@ typedef struct {
     int ano;
 } Livro;
 
+// Função que limpa o buffer do teclado.
 void clearInputBuffer() {
-
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {}
 }
@@ -24,48 +26,97 @@ void clearInputBuffer() {
 void adicionarLivro(Livro livros[], int *quantidade);
 void visualizarLivros(Livro livros[], int quantidade);
 void procurarLivro(Livro livros[], int quantidade, char *titulo);
+void cadastrarUsuario(Usuario usuarios[], int *qtdUsuarios);
+int verificarLogin(Usuario usuarios[], int qtdUsuarios, char *username, char *password);
+
+// Função para cadastrar novos usuários
+void cadastrarUsuario(Usuario usuarios[], int *qtdUsuarios) {
+    if (*qtdUsuarios >= 100) {
+        printf("Limite de usuários atingido!\n");
+        return;
+    }
+
+    printf("Cadastro de novo usuário\n");
+    printf("Nome do usuário: ");
+    fgets(usuarios[*qtdUsuarios].username, sizeof(usuarios[*qtdUsuarios].username), stdin);
+    usuarios[*qtdUsuarios].username[strcspn(usuarios[*qtdUsuarios].username, "\n")] = '\0';  // Remover a nova linha
+
+    printf("Senha: ");
+    fgets(usuarios[*qtdUsuarios].password, sizeof(usuarios[*qtdUsuarios].password), stdin);
+    usuarios[*qtdUsuarios].password[strcspn(usuarios[*qtdUsuarios].password, "\n")] = '\0';  // Remover a nova linha
+
+    (*qtdUsuarios)++;
+    printf("Usuário cadastrado com sucesso!\n");
+}
+
+// Função para verificar o login
+int verificarLogin(Usuario usuarios[], int qtdUsuarios, char *username, char *password) {
+    for (int i = 0; i < qtdUsuarios; i++) {
+        if (strcmp(usuarios[i].username, username) == 0 && strcmp(usuarios[i].password, password) == 0) {
+            return 1;  // Login bem-sucedido
+        }
+    }
+    return 0;  // Login falhou
+}
 
 int main() {
-
     setlocale(LC_ALL, "Portuguese"); // Permite acentuação no código
+
+    Usuario usuarios[100];  // Array para armazenar até 100 usuários
+    int qtdUsuarios = 0;    // Contador de usuários cadastrados
 
     char usernameInput[50];
     char passwordInput[50];
+    int escolha;
 
-    printf("Sistema de login\n");
+    printf("\nSistema de login para bibliotecários\n");
     printf("----------------\n");
 
-    // Pede o nome do usuário
+    printf("Você já possui cadastro no sistema?\n");
+    printf("1. Sim\n");
+    printf("2. Não, efetuar cadastro\n");
+    printf("Escolha uma opção, de 1 a 2: ");
+    scanf("%d", &escolha);
+    clearInputBuffer();  // Limpar o buffer do teclado
+
+    if (escolha == 2) {
+        cadastrarUsuario(usuarios, &qtdUsuarios);
+    }
+
+    // Tentativa de login
     printf("Nome do usuário: ");
     fgets(usernameInput, sizeof(usernameInput), stdin);
     usernameInput[strcspn(usernameInput, "\n")] = '\0';  // Remover a nova linha
 
-    // Pede a senha
     printf("Senha: ");
     fgets(passwordInput, sizeof(passwordInput), stdin);
     passwordInput[strcspn(passwordInput, "\n")] = '\0';  // Remover a nova linha
 
-    // Verifica as credenciais
-    if (strcmp(usernameInput, USERNAME) != 0 && strcmp(passwordInput, PASSWORD) != 0) {
+    if (verificarLogin(usuarios, qtdUsuarios, usernameInput, passwordInput)) {
         printf("Login bem-sucedido!\n");
     } else {
         printf("Nome de usuário ou senha incorretos.\n");
         return 1;
     }
+    
+    // Para limpar a tela
+    system("cls");
 
-    int escolha;
     int quantidade = 0;
     Livro livros[100];  // Array para armazenar até 100 livros
 
+    // Looping de escolhas da biblioteca
     while (1) {
         printf("\nSistema de Gerenciamento de Biblioteca\n");
+        printf("----------------\n");
+        
         printf("1. Adicionar Livro\n");
         printf("2. Visualizar Todos os Livros\n");
         printf("3. Procurar Livro pelo Título\n");
         printf("4. Sair\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opção, de 1 a 4: ");
         scanf("%d", &escolha);
-        getchar();  // Limpar o buffer do teclado
+        clearInputBuffer();  // Limpar o buffer do teclado
 
         switch (escolha) {
             case 1:
@@ -92,8 +143,8 @@ int main() {
     return 0;
 }
 
+// Função para adicionar livros ao sistema
 void adicionarLivro(Livro livros[], int *quantidade) {
-
     if (*quantidade >= 100) {
         printf("Limite de livros atingido!\n");
         return;
@@ -104,19 +155,19 @@ void adicionarLivro(Livro livros[], int *quantidade) {
     livros[*quantidade].titulo[strcspn(livros[*quantidade].titulo, "\n")] = '\0';  // Remover a nova linha
 
     printf("Digite o autor do livro: ");
-    fgets(livros[*quantidade].autor, sizeof(livros[*quantidade].autor), stdin);
+    fgets(livros[*quantidade].autor, sizeof(livros[*quantidade].autor), stdin); 
     livros[*quantidade].autor[strcspn(livros[*quantidade].autor, "\n")] = '\0';  // Remover a nova linha
 
     printf("Digite o ano de publicação: ");
     scanf("%d", &livros[*quantidade].ano);
-    getchar();  // Limpar o buffer do teclado
+    clearInputBuffer();  // Limpar o buffer do teclado
 
     (*quantidade)++;
     printf("Livro adicionado com sucesso!\n");
 }
 
+// Função para visualizar todos os livros
 void visualizarLivros(Livro livros[], int quantidade) {
-
     if (quantidade == 0) {
         printf("Nenhum livro cadastrado.\n");
         return;
@@ -131,8 +182,8 @@ void visualizarLivros(Livro livros[], int quantidade) {
     }
 }
 
-void procurarLivro(Livro livros[], int quantidade, char *titulo){
-
+// Função para procurar um livro pelo título
+void procurarLivro(Livro livros[], int quantidade, char *titulo) {
     for (int i = 0; i < quantidade; i++) {
         if (strcmp(livros[i].titulo, titulo) == 0) {
             printf("Livro encontrado:\n");
@@ -142,6 +193,7 @@ void procurarLivro(Livro livros[], int quantidade, char *titulo){
             return;
         }
     }
-
+    
+    // Para caso o livro não seja encontrado, por dados errados e etc.
     printf("Livro não encontrado.\n");
 }
