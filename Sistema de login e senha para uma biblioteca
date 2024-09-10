@@ -3,6 +3,11 @@
 #include <string.h> // Biblioteca para manipulação de strings.
 #include <locale.h> // Biblioteca que permite a acentuação no código.
 
+// Definindo a estrutura da mensagem de boas-vindas da Biblioteca
+char MENSAGEM[] = "Bem Vindo(a) á Biblioteca Online!";
+int largura; // Definindo a variável largura
+int altura = 7; // Altura do quadrado (inclui a linha de cima e de baixo); (um número ímpar facilita a centralização vertical)
+
 // Definindo a estrutura do usuário
 typedef struct {
     char username[50];
@@ -16,7 +21,7 @@ typedef struct {
     int ano;
 } Livro;
 
-// Função que limpa o buffer do teclado.
+// Função que limpa o buffer do teclado
 void clearInputBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {}
@@ -62,9 +67,47 @@ int verificarLogin(Usuario usuarios[], int qtdUsuarios, char *username, char *pa
 int main() {
     setlocale(LC_ALL, "Portuguese"); // Permite acentuação no código
 
+    // 2 Espaços de cada lado da mensagem
+    largura = strlen(MENSAGEM) + 4;
+
     Usuario usuarios[100];  // Array para armazenar até 100 usuários
     int qtdUsuarios = 0;    // Contador de usuários cadastrados
 
+    // Desenha a parte superior do quadrado
+    for (int i = 0; i < largura; i++) {
+        printf("*");
+    }
+    printf("\n");
+
+    // Desenha o meio do quadrado com a mensagem
+    for (int i = 0; i < altura - 2; i++) {
+        printf("*"); // Lado esquerdo do quadrado
+
+        if (i == (altura - 2) / 2) {
+            int espacos_esquerda = (largura - strlen(MENSAGEM) - 2) / 2; // Espaços antes da mensagem
+            int espacos_direita = largura - strlen(MENSAGEM) - espacos_esquerda - 2; // Espaços depois da mensagem
+            for (int j = 0; j < espacos_esquerda; j++) {
+                printf(" ");
+            }
+            printf("%s", MENSAGEM); // Mostra a mensagem centralizada
+            for (int j = 0; j < espacos_direita; j++) {
+                printf(" ");
+            }
+        } else {
+            for (int j = 0; j < largura - 2; j++) {
+                printf(" "); // Espaços vazios
+            }
+        }
+        printf("*\n"); // Lado direito do quadrado
+    }
+
+    // Desenha a parte inferior do quadrado
+    for (int i = 0; i < largura; i++) {
+        printf("*");
+    }
+    printf("\n");
+
+    // Continua com o resto do código da aplicação de biblioteca
     char usernameInput[50];
     char passwordInput[50];
     int escolha;
@@ -98,7 +141,7 @@ int main() {
         printf("Nome de usuário ou senha incorretos.\n");
         return 1;
     }
-    
+
     // Para limpar a tela
     system("cls");
 
@@ -109,7 +152,7 @@ int main() {
     while (1) {
         printf("\nSistema de Gerenciamento de Biblioteca\n");
         printf("----------------\n");
-        
+
         printf("1. Adicionar Livro\n");
         printf("2. Visualizar Todos os Livros\n");
         printf("3. Procurar Livro pelo Título\n");
@@ -155,7 +198,7 @@ void adicionarLivro(Livro livros[], int *quantidade) {
     livros[*quantidade].titulo[strcspn(livros[*quantidade].titulo, "\n")] = '\0';  // Remover a nova linha
 
     printf("Digite o autor do livro: ");
-    fgets(livros[*quantidade].autor, sizeof(livros[*quantidade].autor), stdin); 
+    fgets(livros[*quantidade].autor, sizeof(livros[*quantidade].autor), stdin);
     livros[*quantidade].autor[strcspn(livros[*quantidade].autor, "\n")] = '\0';  // Remover a nova linha
 
     printf("Digite o ano de publicação: ");
@@ -186,14 +229,12 @@ void visualizarLivros(Livro livros[], int quantidade) {
 void procurarLivro(Livro livros[], int quantidade, char *titulo) {
     for (int i = 0; i < quantidade; i++) {
         if (strcmp(livros[i].titulo, titulo) == 0) {
-            printf("Livro encontrado:\n");
+            printf("Livro encontrado!\n");
             printf("Título: %s\n", livros[i].titulo);
             printf("Autor: %s\n", livros[i].autor);
             printf("Ano de Publicação: %d\n", livros[i].ano);
             return;
         }
     }
-    
-    // Para caso o livro não seja encontrado, por dados errados e etc.
     printf("Livro não encontrado.\n");
 }
