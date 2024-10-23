@@ -10,9 +10,9 @@ int altura = 7; // Altura do quadrado (inclui a linha de cima e de baixo); (um n
 
 // Definindo a estrutura do usuário
 typedef struct {
-    char username[50];
-    char password[50];
-    int isAdmin; // 1 para admin, 0 para usuário comum
+    char usuario[50];
+    char senha[50];
+    int Admin; // 1 para admin, 0 para usuário comum
 } Usuario;
 
 // Definindo a estrutura do livro
@@ -33,7 +33,7 @@ void adicionarLivro(Livro livros[], int *quantidade);
 void visualizarLivros(Livro livros[], int quantidade);
 void procurarLivro(Livro livros[], int quantidade, char *titulo);
 void cadastrarUsuario(Usuario usuarios[], int *qtdUsuarios);
-int verificarLogin(Usuario usuarios[], int qtdUsuarios, char *username, char *password, int *isAdmin);
+int verificarLogin(Usuario usuarios[], int qtdUsuarios, char *usuario, char *senha, int *Admin);
 
 // Função para cadastrar novos usuários
 void cadastrarUsuario(Usuario usuarios[], int *qtdUsuarios) {
@@ -47,15 +47,15 @@ void cadastrarUsuario(Usuario usuarios[], int *qtdUsuarios) {
 
     printf("\nCadastro de novo usuário\n");
     printf("Nome do usuário: ");
-    fgets(usuarios[*qtdUsuarios].username, sizeof(usuarios[*qtdUsuarios].username), stdin);
-    usuarios[*qtdUsuarios].username[strcspn(usuarios[*qtdUsuarios].username, "\n")] = '\0';  // Remover a nova linha
+    fgets(usuarios[*qtdUsuarios].usuario, sizeof(usuarios[*qtdUsuarios].usuario), stdin);
+    usuarios[*qtdUsuarios].usuario[strcspn(usuarios[*qtdUsuarios].usuario, "\n")] = '\0';  // Remover a nova linha
 
     printf("Senha: ");
-    fgets(usuarios[*qtdUsuarios].password, sizeof(usuarios[*qtdUsuarios].password), stdin);
-    usuarios[*qtdUsuarios].password[strcspn(usuarios[*qtdUsuarios].password, "\n")] = '\0';  // Remover a nova linha
+    fgets(usuarios[*qtdUsuarios].senha, sizeof(usuarios[*qtdUsuarios].senha), stdin);
+    usuarios[*qtdUsuarios].senha[strcspn(usuarios[*qtdUsuarios].senha, "\n")] = '\0';  // Remover a nova linha
 
     printf("Você é um administrador? (1 para sim, 0 para não): ");
-    scanf("%d", &usuarios[*qtdUsuarios].isAdmin);
+    scanf("%d", &usuarios[*qtdUsuarios].Admin);
     clearInputBuffer();  // Limpar o buffer do teclado
 
     system("cls"); //Limpar o terminal
@@ -65,10 +65,10 @@ void cadastrarUsuario(Usuario usuarios[], int *qtdUsuarios) {
 }
 
 // Função para verificar o login
-int verificarLogin(Usuario usuarios[], int qtdUsuarios, char *username, char *password, int *isAdmin) {
+int verificarLogin(Usuario usuarios[], int qtdUsuarios, char *Usuario, char *senha, int *Admin) {
     for (int i = 0; i < qtdUsuarios; i++) {
-        if (strcmp(usuarios[i].username, username) == 0 && strcmp(usuarios[i].password, password) == 0) {
-            *isAdmin = usuarios[i].isAdmin;  // Verifica se o usuário é admin
+        if (strcmp(usuarios[i].usuario, Usuario) == 0 && strcmp(usuarios[i].senha, senha) == 0) {
+            *Admin = usuarios[i].Admin;  // Verifica se o usuário é admin
             return 1;  // Login bem-sucedido
         }
     }
@@ -118,10 +118,10 @@ int main() {
     }
     printf("\n");
 
-    // Continua com o resto do código da aplicação de biblioteca
-    char usernameInput[50];
-    char passwordInput[50];
-    int escolha, isAdmin;
+    // Variáveis para verificar se o Login e Senha correspondem com os cadastrados
+    char usuarioInput[50];
+    char senhaInput[50];
+    int escolha, Admin;
 
     printf("\nSistema de login para bibliotecários\n");
     printf("----------------\n");
@@ -139,14 +139,14 @@ int main() {
 
     // Tentativa de login
     printf("Nome do usuário: ");
-    fgets(usernameInput, sizeof(usernameInput), stdin);
-    usernameInput[strcspn(usernameInput, "\n")] = '\0';  // Remover a nova linha
+    fgets(senhaInput, sizeof(usuarioInput), stdin);
+    usuarioInput[strcspn(usuarioInput, "\n")] = '\0';  // Remover a nova linha
 
     printf("Senha: ");
-    fgets(passwordInput, sizeof(passwordInput), stdin);
-    passwordInput[strcspn(passwordInput, "\n")] = '\0';  // Remover a nova linha
+    fgets(senhaInput, sizeof(senhaInput), stdin);
+    senhaInput[strcspn(senhaInput, "\n")] = '\0';  // Remover a nova linha
 
-    if (verificarLogin(usuarios, qtdUsuarios, usernameInput, passwordInput, &isAdmin)) {
+    if (verificarLogin(usuarios, qtdUsuarios, usuarioInput, senhaInput, &Admin)) {
 
         system("cls"); //Limpar o terminal
 
@@ -178,7 +178,7 @@ int main() {
 
         switch (escolha) {
             case 1:
-                if (isAdmin) {
+                if (Admin) {
                     adicionarLivro(livros, &quantidade);
                 } else {
                     system("cls"); //Limpar o terminal
