@@ -182,6 +182,8 @@ void solicitarEmprestimo(Emprestimo emprestimos[], Livro livros[], int *qtdEmpre
 
 // FUNÇÂO PARA VERIFICAR MULTAS
 void verificarMultas(Emprestimo emprestimos[], int qtdEmprestimos) {
+    system("cls"); //Limpar o terminal
+
     printf("\nVerificação de Multas\n");
 
     time_t agora = time(NULL);
@@ -194,8 +196,7 @@ void verificarMultas(Emprestimo emprestimos[], int qtdEmprestimos) {
 
             printf("Usuário: %s - Livro: %s - Dias de Atraso: %.0f - Multa: R$%.2f\n",
                    emprestimos[i].usuario, emprestimos[i].titulo, diasAtraso, multa);
-        }
-        if (diferencaDias <= PRAZO_DEVOLUCAO) {
+        } else {
             system("cls"); //Limpar o terminal
 
             printf("Não há multas, seus livros ainda estão dentro do prazo de devolução.\n");
