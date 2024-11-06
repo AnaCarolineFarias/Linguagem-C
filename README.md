@@ -18,5 +18,6 @@ Este repositório contém estudos e desenvolvimentos que fiz para um trabalho de
 
 ## Ferramentas Utilizadas
 - **CodeBlocks**
+- **Dev C++ **
 
 
