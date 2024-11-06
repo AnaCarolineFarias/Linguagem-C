@@ -10,7 +10,7 @@ Meu nome é **Ana Caroline de Oliveira Farias**. Sou uma desenvolvedora apaixona
 
 Este repositório contém estudos e desenvolvimentos que fiz para um trabalho de final de semestre da minha faculdade, deixei atualizações sobre meu projeto de **Biblioteca em Linguagem C**.
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" alt="Logo C" width="60"> <img src="https://w7.pngwing.com/pngs/726/388/png-transparent-code-blocks-computer-icons-computer-programming-block-icon-angle-rectangle-computer-program-thumbnail.png" alt="CodeBlocks Logo" width="100"/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" alt="Logo C" width="60"> <img src="https://jetsonhacks.com/wp-content/uploads/2016/01/codeblocks2.png" alt="CodeBlocks Logo" width="100"/>
 
 ## Tecnologias Utilizadas
 
