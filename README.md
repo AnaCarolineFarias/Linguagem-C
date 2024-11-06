@@ -8,7 +8,7 @@ Meu nome é **Ana Caroline de Oliveira Farias**. Sou uma desenvolvedora apaixona
 
 ## Sobre o Projeto
 
-Este repositório contém estudos e desenvolvimentos que fiz para um trabalho de final de semestre da minha faculdade, deixei atualizações sobre meu projeto de Biblioteca em C.
+Este repositório contém estudos e desenvolvimentos que fiz para um trabalho de final de semestre da minha faculdade, deixei atualizações sobre meu projeto de **Biblioteca em Linguagem C**.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" alt="Logo C" width="60">
 
