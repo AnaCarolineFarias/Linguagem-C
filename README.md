@@ -17,6 +17,6 @@ Este repositório contém estudos e desenvolvimentos que fiz para um trabalho de
 - **Linguagem:** C
 
 ## Ferramentas Utilizadas
-- **Visual Studio Code**
+- **CodeBlocks**
 
 
