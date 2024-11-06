@@ -10,11 +10,13 @@ Meu nome é **Ana Caroline de Oliveira Farias**. Sou uma desenvolvedora apaixona
 
 Este repositório contém [Estudos e pequenos desenvolvimentos que fiz e estou fazendo em C]. A ideia principal é [Mostrar minhas habilidades nesta linguagem, mostrar que estou indo atrás do conhecimento e aprimorando ela]. 
 
-![Logo C](https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg)
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" alt="Logo C" width="40">
 
-### Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - **Linguagem:** C
-- **VS Code**
+
+## Ferramentas Utilizadas
+- **Visual Studio Code**
 
 
